@@ -1,0 +1,103 @@
+@layer components {
+  .pixel-panel {
+    @apply bg-arcade-panel border-4 border-arcade-border rounded-none;
+    box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.4);
+  }
+
+  .pixel-btn {
+    @apply font-pixel text-xs px-4 py-3 border-4 rounded-none
+           cursor-pointer transition-all duration-100 uppercase tracking-wide;
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.5);
+  }
+
+  .pixel-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.5);
+  }
+
+  .pixel-btn:disabled {
+    @apply opacity-50 cursor-not-allowed;
+    transform: none;
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.5);
+  }
+
+  .pixel-btn-gold {
+    @apply pixel-btn bg-arcade-gold text-black border-yellow-600;
+  }
+  .pixel-btn-red {
+    @apply pixel-btn bg-arcade-red  text-white border-red-800;
+  }
+  .pixel-btn-blue {
+    @apply pixel-btn bg-arcade-blue text-white border-blue-800;
+  }
+  .pixel-btn-ghost {
+    @apply pixel-btn bg-transparent text-arcade-text border-arcade-border;
+  }
+
+  .pixel-input {
+    @apply font-pixel text-xs bg-arcade-bg text-arcade-text
+           border-4 border-arcade-border rounded-none px-4 py-3
+           outline-none w-full;
+    box-shadow: inset 2px 2px 0px rgba(0, 0, 0, 0.3);
+  }
+
+  .pixel-input:focus {
+    @apply border-arcade-gold;
+    box-shadow:
+      inset 2px 2px 0px rgba(0, 0, 0, 0.3),
+      0 0 8px rgba(245, 158, 11, 0.5);
+  }
+
+  .reel-cell {
+    @apply flex items-center justify-center
+           bg-white dark:bg-slate-800
+           border-4 border-arcade-border;
+    width: 90px;
+    height: 90px;
+    font-size: 2.5rem;
+    box-shadow: inset 2px 2px 0px rgba(0, 0, 0, 0.2);
+  }
+
+  .reel-cell.win {
+    @apply border-arcade-gold;
+    animation:
+      flashWin 0.4s ease-in-out infinite alternate,
+      pulseGlow 1.5s ease-in-out infinite;
+  }
+
+  .casino-sign {
+    @apply font-pixel bg-arcade-blue text-arcade-gold
+           border-4 border-arcade-gold px-6 py-3 uppercase;
+    box-shadow:
+      0 0 0 2px #0f172a,
+      0 0 0 4px #f59e0b,
+      6px 6px 0px rgba(0, 0, 0, 0.5);
+    animation: dotBorder 1s ease-in-out infinite;
+  }
+
+  .score-badge {
+    @apply font-pixel text-arcade-gold bg-arcade-panel
+           border-4 border-arcade-gold px-4 py-2;
+    box-shadow: 4px 4px 0px rgba(245, 158, 11, 0.4);
+  }
+
+  .leaderboard-row {
+    @apply flex items-center justify-between
+           border-b-2 border-arcade-border
+           py-3 px-4 font-pixel text-xs;
+    transition: background 0.15s;
+  }
+
+  .leaderboard-row:hover {
+    @apply bg-arcade-border;
+  }
+  .leaderboard-row.rank-1 {
+    @apply text-arcade-gold;
+  }
+  .leaderboard-row.rank-2 {
+    @apply text-slate-300;
+  }
+  .leaderboard-row.rank-3 {
+    @apply text-amber-600;
+  }
+}
