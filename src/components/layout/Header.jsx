@@ -5,7 +5,7 @@ const Header = ({ onToggleTheme, isDark, isMuted, onToggleMute }) => (
                      px-4 py-3 border-b-4 border-arcade-border gap-2">
 
         <div className="font-pixel text-arcade-gold text-xs sm:text-sm">
-            🎰 SLOT.GG
+            🎰 SLOT MACHINE
         </div>
 
         <div className="flex items-center gap-2">
