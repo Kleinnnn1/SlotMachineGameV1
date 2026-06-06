@@ -20,14 +20,14 @@ const SlotMachine = ({ reels, spinsLeft, totalScore, lastResult, isSpinning, onS
     }
 
     return (
-        <div className="pixel-panel p-6 flex flex-col items-center gap-6 w-full max-w-sm mx-auto">
+        <div className="pixel-panel p-4 sm:p-6 flex flex-col items-center gap-4 sm:gap-6 w-full max-w-sm mx-auto">
 
             <WinEffect
                 result={!isSpinning ? lastResult : null}
                 getOrigin={getReelOrigin}
             />
 
-            <div className="casino-sign text-sm">🎰 CASINO 🎰</div>
+            <div className="casino-sign">🎰 CASINO 🎰</div>
 
             <div className="score-badge text-xs">
                 SCORE: {formatScore(totalScore)}
@@ -35,7 +35,7 @@ const SlotMachine = ({ reels, spinsLeft, totalScore, lastResult, isSpinning, onS
 
             <div
                 ref={reelRef}
-                className="flex gap-2 p-3 bg-black/30 border-4 border-arcade-border"
+                className="flex gap-1 sm:gap-2 p-2 sm:p-3 bg-black/30 border-4 border-arcade-border"
             >
                 {reels.map((symbol, i) => (
                     <SlotReel
@@ -48,7 +48,7 @@ const SlotMachine = ({ reels, spinsLeft, totalScore, lastResult, isSpinning, onS
                 ))}
             </div>
 
-            <div className="font-pixel text-xs h-8 flex items-center justify-center text-center">
+            <div className="font-pixel text-xs h-8 flex items-center justify-center text-center px-2">
                 {isSpinning && (
                     <span className="text-arcade-subtle animate-pulse">
                         🎰 Spinning...
@@ -71,7 +71,7 @@ const SlotMachine = ({ reels, spinsLeft, totalScore, lastResult, isSpinning, onS
                 )}
             </div>
 
-            <div className="font-pixel text-xs text-arcade-subtle">
+            <div className="font-pixel text-xs text-arcade-subtle text-center">
                 SPINS LEFT: <span className="text-arcade-text">{spinsLeft}</span>
             </div>
 

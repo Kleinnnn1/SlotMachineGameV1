@@ -85,7 +85,7 @@ const App = () => {
         onToggleMute={handleToggleMute}
       />
 
-      <main className="flex-1 flex flex-col lg:flex-row items-start justify-center gap-8 p-6">
+      <main className="flex-1 flex flex-col lg:flex-row items-start justify-center gap-6 p-4 sm:p-6">
 
         <div className="flex flex-col items-center gap-4 w-full max-w-sm">
 
