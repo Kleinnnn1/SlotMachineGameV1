@@ -10,8 +10,8 @@ export const SYMBOLS = [
 ]
 
 export const REEL_COUNT    = 3
-export const TOTAL_SPINS   = 100
-export const SPIN_DURATION = 600  // ms
+export const TOTAL_SPINS   = 10
+export const SPIN_DURATION = 1000  // ms
 
 export const SCORE_MULTIPLIERS = {
   triple: 5,   // all 3 match  → points × 5

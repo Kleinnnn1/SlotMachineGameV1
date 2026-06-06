@@ -101,3 +101,29 @@
     @apply text-amber-600;
   }
 }
+
+/* ─── Reel Rolling State ─── */
+.reel-rolling {
+  @apply border-arcade-subtle;
+  animation: reelBlur 0.08s ease-in-out infinite;
+}
+
+.reel-landed {
+  animation: reelLand 0.25s ease-out forwards;
+}
+
+.reel-symbol-blur {
+  display: inline-block;
+  filter: blur(1.5px);
+  transform: scaleY(0.9);
+  transition: none;
+}
+
+.reel-symbol-clear {
+  display: inline-block;
+  filter: blur(0);
+  transform: scaleY(1);
+  transition:
+    filter 0.1s,
+    transform 0.1s;
+}

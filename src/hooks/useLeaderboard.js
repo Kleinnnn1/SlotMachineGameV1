@@ -1,40 +1,67 @@
 import { useState, useEffect } from 'react'
-
-// Firebase will be wired here later
-// For now uses localStorage as placeholder
-
-const STORAGE_KEY = 'slot_leaderboard'
-const MAX_ENTRIES = 10
+import {
+  fetchLeaderboard,
+  submitScore     as submitScoreService,
+  isUsernameTaken,
+} from '../services/leaderboardService'
 
 export const useLeaderboard = () => {
-  const [entries,    setEntries]    = useState([])
-  const [isLoading,  setIsLoading]  = useState(false)
-  const [isSubmitted,setIsSubmitted]= useState(false)
-  const [error,      setError]      = useState(null)
+  const [entries,      setEntries]      = useState([])
+  const [isLoading,    setIsLoading]    = useState(false)
+  const [isSubmitted,  setIsSubmitted]  = useState(false)
+  const [error,        setError]        = useState(null)
 
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY)
-    if (stored) setEntries(JSON.parse(stored))
+    loadLeaderboard()
   }, [])
 
-  const submitScore = async (username, score) => {
-    setIsLoading(true)
-    setError(null)
+  const loadLeaderboard = async () => {
     try {
-      const newEntry  = { username, score, date: new Date().toISOString() }
-      const updated   = [...entries, newEntry]
-        .sort((a, b) => b.score - a.score)
-        .slice(0, MAX_ENTRIES)
-
-      setEntries(updated)
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
-      setIsSubmitted(true)
+      setIsLoading(true)
+      const data = await fetchLeaderboard()
+      setEntries(data)
     } catch (err) {
-      setError('Failed to submit score.')
+      setError('Failed to load leaderboard.')
     } finally {
       setIsLoading(false)
     }
   }
 
-  return { entries, isLoading, isSubmitted, error, submitScore }
+  const submitScore = async (username, score) => {
+    setIsLoading(true)
+    setError(null)
+    try {
+      await submitScoreService(username, score)
+      setIsSubmitted(true)
+      await loadLeaderboard() // refresh after submit
+    } catch (err) {
+      if (err.message === 'USERNAME_TAKEN') {
+        setError('Username already taken. Try a different name.')
+      } else {
+        setError('Failed to submit score. Try again.')
+      }
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const checkUsername = async (username) => {
+    if (username.trim().length < 2) return false
+    try {
+      const taken = await isUsernameTaken(username)
+      return !taken
+    } catch {
+      return false
+    }
+  }
+
+  return {
+    entries,
+    isLoading,
+    isSubmitted,
+    error,
+    submitScore,
+    checkUsername,
+    loadLeaderboard,
+  }
 }
