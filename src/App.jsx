@@ -9,25 +9,29 @@ import Input from './components/ui/Input'
 import { useSlotMachine } from './hooks/useSlotMachine'
 import { useLeaderboard } from './hooks/useLeaderboard'
 import { getScoreLabel } from './utils/scoreCalculator'
+import { toggleMute, getMuted } from './utils/soundEngine'
 
 const App = () => {
+  const [isMuted, setIsMuted] = useState(false)
   const [isDark, setIsDark] = useState(true)
   const [username, setUsername] = useState('')
   const [entered, setEntered] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [usernameStatus, setUsernameStatus] = useState('idle')
-  // idle | checking | available | taken
 
   const slot = useSlotMachine()
   const leaderboard = useLeaderboard()
   const scoreInfo = getScoreLabel(slot.totalScore)
 
-  // ─── Theme on mount ────────────────────────────────────────────────────────
+  const handleToggleMute = () => {
+    const nowMuted = toggleMute()
+    setIsMuted(nowMuted)
+  }
+
   useEffect(() => {
     document.documentElement.classList.toggle('dark', isDark)
   }, [isDark])
 
-  // ─── Debounced username check ──────────────────────────────────────────────
   useEffect(() => {
     if (username.trim().length < 2) {
       setUsernameStatus('idle')
@@ -43,7 +47,6 @@ const App = () => {
     return () => clearTimeout(timer)
   }, [username])
 
-  // ─── Handlers ─────────────────────────────────────────────────────────────
   const handleEnter = () => {
     if (usernameStatus !== 'available') return
     setEntered(true)
@@ -64,7 +67,6 @@ const App = () => {
 
   const toggleTheme = () => setIsDark(prev => !prev)
 
-  // ─── Username status helpers ───────────────────────────────────────────────
   const statusConfig = {
     idle: { msg: '', color: '' },
     checking: { msg: '⏳ Checking...', color: 'text-arcade-subtle' },
@@ -76,15 +78,19 @@ const App = () => {
 
   return (
     <PageWrapper>
-      <Header onToggleTheme={toggleTheme} isDark={isDark} />
+      <Header
+        onToggleTheme={toggleTheme}
+        isDark={isDark}
+        isMuted={isMuted}
+        onToggleMute={handleToggleMute}
+      />
 
       <main className="flex-1 flex flex-col lg:flex-row items-start justify-center gap-8 p-6">
 
-        {/* ─── Left: Game ─────────────────────────────────────────────────── */}
         <div className="flex flex-col items-center gap-4 w-full max-w-sm">
 
           {!entered ? (
-            /* Username Entry */
+
             <div className="pixel-panel p-6 w-full flex flex-col gap-4">
               <p className="font-pixel text-xs text-arcade-gold text-center">
                 ENTER USERNAME
@@ -97,7 +103,6 @@ const App = () => {
                 maxLength={16}
               />
 
-              {/* Status message */}
               {msg && (
                 <p className={`font-pixel text-xs ${color}`}>{msg}</p>
               )}
@@ -111,7 +116,7 @@ const App = () => {
             </div>
 
           ) : (
-            /* Slot Machine */
+
             <>
               <p className="font-pixel text-xs text-arcade-subtle">
                 👤 {username}
@@ -126,7 +131,6 @@ const App = () => {
                 onSpin={slot.spin}
               />
 
-              {/* Game Over Panel */}
               {slot.isGameOver && (
                 <div className="pixel-panel p-4 w-full text-center flex flex-col gap-3 animate-bounce-in">
                   <p className={`font-pixel text-sm ${scoreInfo.color}`}>
@@ -156,7 +160,6 @@ const App = () => {
           )}
         </div>
 
-        {/* ─── Right: Leaderboard ─────────────────────────────────────────── */}
         <div className="w-full max-w-sm">
           <Leaderboard
             entries={leaderboard.entries}
@@ -166,7 +169,6 @@ const App = () => {
 
       </main>
 
-      {/* ─── Submit Modal ────────────────────────────────────────────────── */}
       <Modal isOpen={showModal}>
         <div className="flex flex-col gap-4 text-center">
           <p className="font-pixel text-arcade-gold text-sm">GAME OVER</p>

@@ -22,7 +22,6 @@ export const useSlotMachine = () => {
     setIsSpinning(true)
     sound.spinSound()
 
-    // Staggered reel land sounds
     setTimeout(() => sound.reelLand(0), 0)
     setTimeout(() => sound.reelLand(1), 150)
     setTimeout(() => sound.reelLand(2), 300)
@@ -39,7 +38,6 @@ export const useSlotMachine = () => {
       setSpinHistory(prev => [...prev, { reels: newReels, result }])
       setIsSpinning(false)
 
-      // Result sounds
       if (result.type === 'triple') sound.jackpot()
       else if (result.type === 'double') sound.doubleWin()
       else sound.noMatch()

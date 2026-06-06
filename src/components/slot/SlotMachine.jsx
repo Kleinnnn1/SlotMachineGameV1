@@ -10,7 +10,6 @@ const SlotMachine = ({ reels, spinsLeft, totalScore, lastResult, isSpinning, onS
     const isWin = lastResult?.isWin
     const reelRef = useRef(null)
 
-    // Calculate reel position as 0-1 values for confetti origin
     const getReelOrigin = () => {
         if (!reelRef.current) return { x: 0.5, y: 0.5 }
         const rect = reelRef.current.getBoundingClientRect()
@@ -23,21 +22,17 @@ const SlotMachine = ({ reels, spinsLeft, totalScore, lastResult, isSpinning, onS
     return (
         <div className="pixel-panel p-6 flex flex-col items-center gap-6 w-full max-w-sm mx-auto">
 
-            {/* Win Effect */}
             <WinEffect
                 result={!isSpinning ? lastResult : null}
                 getOrigin={getReelOrigin}
             />
 
-            {/* Casino Sign */}
             <div className="casino-sign text-sm">🎰 CASINO 🎰</div>
 
-            {/* Score */}
             <div className="score-badge text-xs">
                 SCORE: {formatScore(totalScore)}
             </div>
 
-            {/* Reels */}
             <div
                 ref={reelRef}
                 className="flex gap-2 p-3 bg-black/30 border-4 border-arcade-border"
@@ -53,7 +48,6 @@ const SlotMachine = ({ reels, spinsLeft, totalScore, lastResult, isSpinning, onS
                 ))}
             </div>
 
-            {/* Result Message */}
             <div className="font-pixel text-xs h-8 flex items-center justify-center text-center">
                 {isSpinning && (
                     <span className="text-arcade-subtle animate-pulse">
@@ -77,12 +71,10 @@ const SlotMachine = ({ reels, spinsLeft, totalScore, lastResult, isSpinning, onS
                 )}
             </div>
 
-            {/* Spins Left */}
             <div className="font-pixel text-xs text-arcade-subtle">
                 SPINS LEFT: <span className="text-arcade-text">{spinsLeft}</span>
             </div>
 
-            {/* Spin Button */}
             <SpinButton
                 onClick={onSpin}
                 disabled={isSpinning || spinsLeft === 0}

@@ -6,17 +6,18 @@ import {
   where,
   orderBy,
   limit,
+  serverTimestamp,  // ← add this
 } from 'firebase/firestore'
 import { db } from './firebase'
 
-const COLLECTION = 'leaderboard'
+const COLLECTION  = 'leaderboard'
 const MAX_ENTRIES = 10
 
 export const isUsernameTaken = async (username) => {
   try {
     const q = query(
       collection(db, COLLECTION),
-      where('username', '==', username.trim().toLowerCase())
+      where('usernameLower', '==', username.trim().toLowerCase())
     )
     const snapshot = await getDocs(q)
     return !snapshot.empty
@@ -32,10 +33,10 @@ export const submitScore = async (username, score) => {
     if (taken) throw new Error('USERNAME_TAKEN')
 
     await addDoc(collection(db, COLLECTION), {
-      username:          username.trim(),
-      usernameLower:     username.trim().toLowerCase(),
+      username:      username.trim(),
+      usernameLower: username.trim().toLowerCase(),
       score,
-      createdAt:         new Date(),
+      createdAt:     serverTimestamp(),
     })
 
     return { success: true }
@@ -45,7 +46,6 @@ export const submitScore = async (username, score) => {
   }
 }
 
-// ─── Fetch top 10 scores ─────────────────────────────────────────────────────
 export const fetchLeaderboard = async () => {
   try {
     const q = query(

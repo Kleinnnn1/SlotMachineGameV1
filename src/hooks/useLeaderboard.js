@@ -33,7 +33,7 @@ export const useLeaderboard = () => {
     try {
       await submitScoreService(username, score)
       setIsSubmitted(true)
-      await loadLeaderboard() // refresh after submit
+      await loadLeaderboard()
     } catch (err) {
       if (err.message === 'USERNAME_TAKEN') {
         setError('Username already taken. Try a different name.')

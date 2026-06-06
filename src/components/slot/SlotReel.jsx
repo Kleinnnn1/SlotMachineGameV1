@@ -9,7 +9,7 @@ const SlotReel = ({ symbol, isSpinning, isWin, delay = 0 }) => {
 
     useEffect(() => {
         if (!isSpinning) {
-            // Land on final symbol after delay
+
             const landTimer = setTimeout(() => {
                 setDisplaySymbol(symbol)
                 setRolling(false)
@@ -17,7 +17,7 @@ const SlotReel = ({ symbol, isSpinning, isWin, delay = 0 }) => {
             return () => clearTimeout(landTimer)
         }
 
-        // Start rolling
+
         setRolling(true)
         let interval
         const startTimer = setTimeout(() => {

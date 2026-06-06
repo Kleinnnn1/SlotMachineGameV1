@@ -88,21 +88,17 @@
     transition: background 0.15s;
   }
 
-  .leaderboard-row:hover {
-    @apply bg-arcade-border;
-  }
   .leaderboard-row.rank-1 {
-    @apply text-arcade-gold;
+    @apply text-yellow-500;
   }
   .leaderboard-row.rank-2 {
-    @apply text-slate-300;
+    @apply text-red-500;
   }
   .leaderboard-row.rank-3 {
-    @apply text-amber-600;
+    @apply text-orange-500;
   }
 }
 
-/* ─── Reel Rolling State ─── */
 .reel-rolling {
   @apply border-arcade-subtle;
   animation: reelBlur 0.08s ease-in-out infinite;

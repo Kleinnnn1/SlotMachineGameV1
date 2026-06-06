@@ -91,7 +91,6 @@
   }
 }
 
-/* Reel rolling blur effect */
 @keyframes reelBlur {
   0%,
   100% {
@@ -104,7 +103,6 @@
   }
 }
 
-/* Reel land bounce */
 @keyframes reelLand {
   0% {
     transform: scaleY(1.15);
