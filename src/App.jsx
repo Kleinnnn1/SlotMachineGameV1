@@ -100,7 +100,7 @@ const App = () => {
                 value={username}
                 onChange={setUsername}
                 placeholder="YOUR NAME..."
-                maxLength={16}
+                maxLength={30}
               />
 
               {msg && (
